@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--dialog-->
+    <style name="NoDimDialogFragmentStyle" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:backgroundDimAmount">0.0</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>
