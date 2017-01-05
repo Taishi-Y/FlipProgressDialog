@@ -18,6 +18,7 @@ import com.taishi.flipprogressdialog.FlipProgressDialog;
 
 public class MainActivity extends AppCompatActivity {
 
+	FlipProgressDialog flipProgressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 
-		FlipProgressDialog flipProgressDialog = new FlipProgressDialog();
-		flipProgressDialog.show(getFragmentManager(),"");
+		flipProgressDialog = new FlipProgressDialog();
+
 
 
 		Button button = (Button) findViewById(R.id.button);
@@ -34,8 +35,17 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 			// ダイアログを表示する
-			FlipProgressDialog flipProgressDialog = new FlipProgressDialog();
+
 			flipProgressDialog.show(getFragmentManager(),"");
+			}
+		});
+
+		Button buttonStop = (Button) findViewById(R.id.button_stop);
+		buttonStop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				// ダイアログを表示する
+				flipProgressDialog.dismiss();
 			}
 		});
 	}
