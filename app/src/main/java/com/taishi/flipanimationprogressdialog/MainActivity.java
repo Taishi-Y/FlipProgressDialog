@@ -1,53 +1,82 @@
 package com.taishi.flipanimationprogressdialog;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.app.DialogFragment;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ActionBarOverlayLayout;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
-import android.widget.ImageView;
+
 
 import com.taishi.flipprogressdialog.FlipProgressDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
 	FlipProgressDialog flipProgressDialog;
+	List<Integer> imageList;
+
+	Button btnFlipY, btnFlipX, btnSlow, btnFast;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-
 		flipProgressDialog = new FlipProgressDialog();
 
+		btnFlipY = (Button) findViewById(R.id.btn_flip_y);
+		btnFlipX = (Button) findViewById(R.id.btn_flip_x);
+		btnSlow = (Button) findViewById(R.id.btn_slow);
+		btnFast = (Button) findViewById(R.id.btn_fast);
 
 
-		Button button = (Button) findViewById(R.id.button);
-		button.setOnClickListener(new View.OnClickListener() {
+
+		btnFlipY.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-			// ダイアログを表示する
+				List<Integer> imageList = new ArrayList<Integer>();
+				imageList.add(R.drawable.guitar);
+				imageList.add(R.drawable.ic_android_black_24dp);
 
-			flipProgressDialog.show(getFragmentManager(),"");
+				FlipProgressDialog flipY = new FlipProgressDialog();
+				flipY.setImageList(imageList);
+				flipY.setOrientation("rotationY");
+				flipY.show(getFragmentManager(),"");
 			}
 		});
 
-		Button buttonStop = (Button) findViewById(R.id.button_stop);
-		buttonStop.setOnClickListener(new View.OnClickListener() {
+		btnFlipX.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// ダイアログを表示する
-				flipProgressDialog.dismiss();
+				FlipProgressDialog flipX = new FlipProgressDialog();
+				flipX.setOrientation("rotationX");
+				flipX.show(getFragmentManager(),"");
 			}
 		});
+
+		btnFast.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				FlipProgressDialog fast = new FlipProgressDialog();
+				fast.setDuration(200);
+				fast.show(getFragmentManager(),"");
+			}
+		});
+
+		btnSlow.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				FlipProgressDialog slow = new FlipProgressDialog();
+				slow.setDuration(1000);
+				slow.show(getFragmentManager(),"");
+			}
+		});
+
+
 	}
-
 }
