@@ -50,11 +50,11 @@ public class FlipProgressDialog extends DialogFragment {
 	private int backgroundColorWIthAlpha = 452984831;
 	private int borderStroke = 0;
 	private int borderColor = -1;
-	private int r = 16;
+	private int cornerRadius = 16;
 	private float dimAmount = 0.0f;
 
 	// Set Image settings
-	private int imageMargin = 20;
+	private int imageMargin = 10;
 	private int imageSize = 200;
 	//	private int imageSize = FrameLayout.LayoutParams.MATCH_PARENT;
 	private List<Integer> imageList  = new ArrayList<Integer>();
@@ -66,16 +66,8 @@ public class FlipProgressDialog extends DialogFragment {
 		this.image = image;
 	}
 
-	public void setMinAlpha(float minAlpha) {
-		this.minAlpha = minAlpha;
-	}
-
-	public void setMaxAlpha(float maxAlpha) {
-		this.maxAlpha = maxAlpha;
-	}
-
-	public void setImageList(List<Integer> imageList) {
-		this.imageList = imageList;
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 
 	public void setDuration(int duration) {
@@ -94,16 +86,20 @@ public class FlipProgressDialog extends DialogFragment {
 		this.endAngle = endAngle;
 	}
 
+	public void setMinAlpha(float minAlpha) {
+		this.minAlpha = minAlpha;
+	}
+
+	public void setMaxAlpha(float maxAlpha) {
+		this.maxAlpha = maxAlpha;
+	}
+
 	public void setBackgroundColor(int backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
 
 	public void setBackgroundAlpha(float backgroundAlpha) {
 		this.backgroundAlpha = backgroundAlpha;
-	}
-
-	public void setBackgroundColorWIthAlpha(int backgroundColorWIthAlpha) {
-		this.backgroundColorWIthAlpha = backgroundColorWIthAlpha;
 	}
 
 	public void setBorderStroke(int borderStroke) {
@@ -114,8 +110,8 @@ public class FlipProgressDialog extends DialogFragment {
 		this.borderColor = borderColor;
 	}
 
-	public void setR(int r) {
-		this.r = r;
+	public void setCornerRadius(int cornerRadius) {
+		this.cornerRadius = cornerRadius;
 	}
 
 	public void setDimAmount(float dimAmount) {
@@ -130,7 +126,9 @@ public class FlipProgressDialog extends DialogFragment {
 		this.imageSize = imageSize;
 	}
 
-
+	public void setImageList(List<Integer> imageList) {
+		this.imageList = imageList;
+	}
 
 	public void setCanceledOnTouchOutside(boolean canceledOnTouchOutside) {
 		this.canceledOnTouchOutside = canceledOnTouchOutside;
@@ -143,9 +141,6 @@ public class FlipProgressDialog extends DialogFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		imageList = new ArrayList<Integer>();
-		imageList.add(R.drawable.guitar);
-		imageList.add(R.drawable.sample_droid);
 	}
 
 	@Override
@@ -195,7 +190,7 @@ public class FlipProgressDialog extends DialogFragment {
 		// Set Background color and shape
 		BackgroundView backgroundView = new BackgroundView();
 		backgroundColorWIthAlpha = backgroundView.createTransparentColor(backgroundColor, backgroundAlpha);
-		Drawable backgroundDrawable = backgroundView.setBackground(view,backgroundColorWIthAlpha,borderColor,r,borderStroke);
+		Drawable backgroundDrawable = backgroundView.setBackground(view,backgroundColorWIthAlpha,borderColor,cornerRadius,borderStroke);
 		getDialog().getWindow().setBackgroundDrawable(backgroundDrawable);
 
 		// Let's create the missing ImageView
