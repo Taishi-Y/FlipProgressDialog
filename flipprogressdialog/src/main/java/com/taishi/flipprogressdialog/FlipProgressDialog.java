@@ -71,10 +71,6 @@ public class FlipProgressDialog extends DialogFragment {
 		this.image = image;
 	}
 
-	public void setCounter(int counter) {
-		this.counter = counter;
-	}
-
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
@@ -132,7 +128,6 @@ public class FlipProgressDialog extends DialogFragment {
 	}
 
 	public void setImageList(List<Integer> imageList) {
-		this.imageList.clear();
 		this.imageList = imageList;
 	}
 
