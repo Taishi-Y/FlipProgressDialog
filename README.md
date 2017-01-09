@@ -3,7 +3,7 @@
 [ ![Download](https://api.bintray.com/packages/taishi-y/maven/flipprogressdialog/images/download.svg) ](https://bintray.com/taishi-y/maven/flipprogressdialog/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Android ProgressDialog with Image Flip Animation like a Airbnb app has one.
+Android ProgressDialog with Image Flip Animation like a Airbnb app.
 
 <img src="https://github.com/Taishi-Y/FlipProgressDialog/blob/master/images/flipprogressdialog.gif?raw=true" 
 alt="" width="240" border="10" />
