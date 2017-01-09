@@ -4,15 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +19,15 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//dialog destroy
+//http://stackoverflow.com/questions/14657490/how-to-properly-retain-a-dialogfragment-through-rotation
 
 
 /**
@@ -36,6 +38,8 @@ public class FlipProgressDialog extends DialogFragment {
 
 	ImageView image;
 	int counter = 0;
+	Handler handler;
+	Runnable r;
 
 	//Set Animation stuff
 	private int duration = 600;
@@ -61,6 +65,7 @@ public class FlipProgressDialog extends DialogFragment {
 
 	// Set cancelOnTouch
 	private boolean canceledOnTouchOutside = true;
+
 
 	public void setImage(ImageView image) {
 		this.image = image;
@@ -127,6 +132,7 @@ public class FlipProgressDialog extends DialogFragment {
 	}
 
 	public void setImageList(List<Integer> imageList) {
+		this.imageList.clear();
 		this.imageList = imageList;
 	}
 
@@ -135,6 +141,7 @@ public class FlipProgressDialog extends DialogFragment {
 	}
 
 	public FlipProgressDialog() {
+
 	}
 
 
@@ -158,21 +165,28 @@ public class FlipProgressDialog extends DialogFragment {
 	private void repeatChangeImages(){
 		final int numberImageList = imageList.size()-1;
 
-		final Handler handler = new Handler();
-		final Runnable r = new Runnable() {
+		handler = new Handler();
+		r = new Runnable() {
 			@Override
 			public void run() {
 				handler.postDelayed(this, duration);
 				//Check if is the showing image last image in the ArrayList
-				if(numberImageList == counter){
-					counter = 0;
-					image.setImageResource(imageList.get(counter));
-				} else {
-					counter ++;
-					image.setImageResource(imageList.get(counter));
+
+				try {
+					if(numberImageList == counter){
+						counter = 0;
+						image.setImageResource(imageList.get(counter));
+					} else {
+						counter ++;
+						image.setImageResource(imageList.get(counter));
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					Log.e("image null error","Try to set imageList!");
 				}
 			}
 		};
+
 		handler.postDelayed(r,duration);
 	}
 
@@ -194,7 +208,6 @@ public class FlipProgressDialog extends DialogFragment {
 		getDialog().getWindow().setBackgroundDrawable(backgroundDrawable);
 
 		// Let's create the missing ImageView
-//		ImageView image = null;
 		image = new ImageView(getActivity());
 
 
@@ -204,9 +217,14 @@ public class FlipProgressDialog extends DialogFragment {
 		// Set margins for image
 		params.setMargins(imageMargin,imageMargin,imageMargin,imageMargin);
 
-		image.setScaleType(ImageView.ScaleType.FIT_XY);
-		image.setImageResource(imageList.get(0));
-		image.setLayoutParams(params);
+		try {
+			image.setScaleType(ImageView.ScaleType.FIT_XY);
+			image.setImageResource(imageList.get(0));
+			image.setLayoutParams(params);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("image null error","Try to set imageList!");
+		}
 
 
 		// Let's get the root layout and add our ImageView
@@ -218,9 +236,19 @@ public class FlipProgressDialog extends DialogFragment {
 		return view;
 	}
 
+	@Override
+	public void onDestroyView() {
+		Dialog dialog = getDialog();
+		if (dialog != null && getRetainInstance()) {
+			dialog.setDismissMessage(null);
+		}
+		handler.removeCallbacks(r);
+		super.onDestroyView();
+	}
+
 	private void animateAnimatorSetSample(ImageView target) {
 
-		// AnimatorSetに渡すAnimatorのリストです
+		// Set AnimatorList(Will set on AnimatorSet)
 		List<Animator> animatorList= new ArrayList<Animator>();
 
 		// alphaプロパティを0fから1fに変化させます
@@ -232,19 +260,20 @@ public class FlipProgressDialog extends DialogFragment {
 				ObjectAnimator.ofPropertyValuesHolder(target, alphaAnimator, flipAnimator);
 		translationAnimator.setDuration(duration);
 		translationAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-//		// だんだん早くなる（加速）
-//		anim.setInterpolator(new AccelerateInterpolator());
-//		// だんだん遅くなる（減速）
-//		anim.setInterpolator(new DecelerateInterpolator());
-//		// 加速→減速→加速
-//		anim.setInterpolator(new AccelerateDecelerateInterpolator());
+//		// faster
+//		translationAnimator.setInterpolator(new AccelerateInterpolator());
+//		// slower
+//		translationAnimator.setInterpolator(new DecelerateInterpolator());
+//		// fast->slow->fast
+//		translationAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
 
-
+		// repeat translationAnimator
 		translationAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+		// Set all animation to animatorList
 		animatorList.add(translationAnimator);
 
 		final AnimatorSet animatorSet = new AnimatorSet();
-		// Set animatorList on animatorSet
+		// Set animatorList to animatorSet
 		animatorSet.playSequentially(animatorList);
 
 		// Start Animation

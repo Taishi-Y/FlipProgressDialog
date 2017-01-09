@@ -4,9 +4,7 @@ package com.taishi.flipanimationprogressdialog;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ActionBarOverlayLayout;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
 
