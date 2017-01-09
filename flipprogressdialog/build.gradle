@@ -5,6 +5,10 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
@@ -23,10 +27,10 @@ android {
 }
 
 publish {
-    userOrg = 'taishi'
-    groupId = 'com.taishi'
+    userOrg = 'taishi-y'
+    groupId = 'com.taishi-y'
     artifactId = 'flipprogressdialog'
-    publishVersion = '0.0.1'
+    publishVersion = '0.1.0'
     desc = 'Flip Progress Dialog'
     website = 'https://github.com/taishi-y/flipprogressdialog'
 }
