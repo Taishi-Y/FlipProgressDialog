@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 25
@@ -19,6 +20,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+publish {
+    userOrg = 'taishi'
+    groupId = 'com.taishi'
+    artifactId = 'flipprogressdialog'
+    publishVersion = '0.0.1'
+    desc = 'Flip Progress Dialog'
+    website = 'https://github.com/taishi-y/flipprogressdialog'
 }
 
 dependencies {
