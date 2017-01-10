@@ -32,7 +32,7 @@ imageList.add(R.drawable.ic_favorite_white_24dp);
 
 FlipProgressDialog fpd = new FlipProgressDialog();
 
-fpd.setImageList(imageList);                              // Set a imageList
+fpd.setImageList(imageList);                              // *Set a imageList* [Have to. Transparent background png recommended]
 fpd.setCanceledOnTouchOutside(true);                      // If true, the dialog will be dismissed when user touch outside of the dialog. If false, the dialog won't be dismissed.
 fpd.setDimAmount(0.0f);                                   // Set a dim (How much dark outside of dialog)
 
