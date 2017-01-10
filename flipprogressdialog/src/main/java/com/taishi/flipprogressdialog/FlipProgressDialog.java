@@ -26,12 +26,13 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-//dialog destroy
-//http://stackoverflow.com/questions/14657490/how-to-properly-retain-a-dialogfragment-through-rotation
-
 
 /**
- * Created by yamasakitaishi on 2016/12/28.
+ * A ProgressDialog with Image Flip Animation.
+ * For more information, check https://github.com/Taishi-Y/FlipProgressDialog
+ *
+ * @author Taishi Yamasaki (http://taishi.tech/)
+ * @version 0.1.0 01/10/2017
  */
 
 public class FlipProgressDialog extends DialogFragment {
